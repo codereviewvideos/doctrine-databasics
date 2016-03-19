@@ -2,5 +2,11 @@
 
 
 {% block body %}
-hello reddit
+
+    <ul>
+        {% for post in posts %}
+        <li>{{ post.title }}</li>
+        {% endfor %}
+    </ul>
+
 {% endblock %}
