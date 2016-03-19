@@ -12,6 +12,6 @@ class RedditController extends Controller
      */
     public function listAction()
     {
-        return $this->render('reddit/index.html.twig');
+        return $this->render(':reddit:index.html.twig');
     }
 }
