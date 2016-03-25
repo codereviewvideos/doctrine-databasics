@@ -25,6 +25,12 @@ class RedditPost
      */
     protected $title;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\RedditAuthor", inversedBy="posts")
+     * @ORM\JoinColumn(name="author_id", referencedColumnName="id")
+     */
+    protected $author;
+
 
 
     /**
@@ -50,6 +56,25 @@ class RedditPost
     public function setTitle($title)
     {
         $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * @param mixed $author
+     * @return RedditPost
+     */
+    public function setAuthor($author)
+    {
+        $this->author = $author;
 
         return $this;
     }
