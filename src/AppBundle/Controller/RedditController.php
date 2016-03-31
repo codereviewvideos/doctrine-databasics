@@ -18,4 +18,18 @@ class RedditController extends Controller
             'posts' => $posts
         ]);
     }
+
+    /**
+     * @Route("/scraper", name="scraper")
+     */
+    public function scraperAction()
+    {
+        $result = $this->get('reddit_scraper')->scrape();
+
+        dump($result);
+
+        return $this->render(':reddit:index.html.twig', [
+            'posts' => []
+        ]);
+    }
 }
