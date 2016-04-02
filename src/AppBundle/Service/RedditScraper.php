@@ -45,6 +45,8 @@ class RedditScraper
                 $this->em->flush();
             }
 
+            $redditPost->setAuthor($redditAuthor);
+
             $this->em->persist($redditPost);
         }
 
