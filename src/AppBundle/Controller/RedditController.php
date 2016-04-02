@@ -26,8 +26,6 @@ class RedditController extends Controller
     {
         $result = $this->get('reddit_scraper')->scrape();
 
-        dump($result);
-
         return $this->render(':reddit:index.html.twig', [
             'posts' => []
         ]);

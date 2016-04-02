@@ -9,7 +9,9 @@ use Doctrine\ORM\Mapping as ORM;
  * @package AppBundle\Entity
  *
  * @ORM\Entity()
- * @ORM\Table(name="reddit_author")
+ * @ORM\Table(name="reddit_author", indexes={
+ *   @ORM\Index(name="index_author_name", columns={"name"})
+ * })
  */
 class RedditAuthor
 {
@@ -21,7 +23,7 @@ class RedditAuthor
     protected $id;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", unique=true)
      */
     protected $name;
 
