@@ -28,6 +28,12 @@ class RedditAuthor
     protected $name;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\RedditPost", inversedBy="author")
+     * @ORM\JoinColumn(name="post_id", referencedColumnName="id")
+     */
+    protected $posts;
+
+    /**
      * @return mixed
      */
     public function getId()

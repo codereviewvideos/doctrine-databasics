@@ -25,6 +25,11 @@ class RedditPost
      */
     protected $title;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\RedditAuthor", mappedBy="posts")
+     */
+    protected $author;
+
 
 
     /**
