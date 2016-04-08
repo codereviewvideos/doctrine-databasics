@@ -21,31 +21,40 @@ class RedditScraper
     public function scrape()
     {
         $client = new \GuzzleHttp\Client();
+        $after = null;
 
-        $response = $client->request('GET', 'https://api.reddit.com/r/php.json');
+        for ($x=0; $x<5; $x++) {
+            $response = $client->request('GET', 'https://api.reddit.com/r/php.json?limit=25&after=' . $after);
 
-        $contents = json_decode($response->getBody()->getContents(), true);
+            $contents[$x] = json_decode($response->getBody()->getContents(), true);
 
-        foreach ($contents['data']['children'] as $child) {
+            $after = $contents[$x]['data']['after'];
+        }
 
-            $redditPost = new RedditPost();
-            $redditPost->setTitle($child['data']['title']);
+        foreach ($contents as $content) {
+            foreach ($content['data']['children'] as $child) {
 
-            $authorName = $child['data']['author'];
+                $redditPost = new RedditPost();
+                $redditPost->setTitle($child['data']['title']);
 
-            $redditAuthor = $this->em->getRepository('AppBundle:RedditAuthor')->findOneBy([
-                'name' => $authorName
-            ]);
+                $authorName = $child['data']['author'];
 
-            if (!$redditAuthor) {
-                $redditAuthor = new RedditAuthor();
-                $redditAuthor->setName($authorName);
+                $redditAuthor = $this->em->getRepository('AppBundle:RedditAuthor')->findOneBy([
+                    'name' => $authorName
+                ]);
 
-                $this->em->persist($redditAuthor);
-                $this->em->flush();
+                if (!$redditAuthor) {
+                    $redditAuthor = new RedditAuthor();
+                    $redditAuthor->setName($authorName);
+
+                    $this->em->persist($redditAuthor);
+                    $this->em->flush();
+                }
+
+                $redditAuthor->addPost($redditPost);
+
+                $this->em->persist($redditPost);
             }
-
-            $this->em->persist($redditPost);
         }
 
         $this->em->flush();

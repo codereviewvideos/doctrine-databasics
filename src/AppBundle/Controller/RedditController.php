@@ -12,7 +12,12 @@ class RedditController extends Controller
      */
     public function listAction()
     {
-        $posts = $this->getDoctrine()->getRepository('AppBundle:RedditPost')->findAll();
+
+
+        $posts = $this->getDoctrine()->getRepository('AppBundle\Entity\RedditPost')
+            ->someQueryWeCareAbout(515);
+
+        dump($posts);
 
         return $this->render(':reddit:index.html.twig', [
             'posts' => $posts

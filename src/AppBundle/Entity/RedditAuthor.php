@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -26,6 +27,16 @@ class RedditAuthor
      * @ORM\Column(type="string", unique=true)
      */
     protected $name;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\RedditPost", mappedBy="author")
+     */
+    protected $posts;
+
+    public function __construct()
+    {
+        $this->posts = new ArrayCollection();
+    }
 
     /**
      * @return mixed
@@ -53,4 +64,35 @@ class RedditAuthor
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getPosts()
+    {
+        return $this->posts;
+    }
+
+    public function addPost(RedditPost $redditPost)
+    {
+        if ( ! $this->posts->contains($redditPost)) {
+            $redditPost->setAuthor($this);
+            $this->posts->add($redditPost);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param mixed $posts
+     * @return RedditAuthor
+     */
+    public function setPosts($posts)
+    {
+        $this->posts = $posts;
+
+        return $this;
+    }
+
+
 }
