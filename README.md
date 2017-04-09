@@ -1,7 +1,7 @@
 Doctrine Databasics
 ===================
 
-This is the finished code from the course at (https://codereviewvideos.com/course/doctrine-databasics)
+This is the finished code from the course at https://codereviewvideos.com/course/doctrine-databasics
 :)
 
 
@@ -36,4 +36,4 @@ The same goes for most, if not all of the terms honestly. Once you've seen them 
 This beginner friendly short course is all about demystifying a bunch of these terms, and getting your started - quickly - with some hands on exercises to cover the basics of working with 
 Doctrine in Symfony 3.
 
-Find the full course at (https://codereviewvideos.com/course/doctrine-databasics
+Find the full course at https://codereviewvideos.com/course/doctrine-databasics
