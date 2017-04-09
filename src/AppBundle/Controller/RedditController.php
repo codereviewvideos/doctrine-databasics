@@ -12,10 +12,20 @@ class RedditController extends Controller
      */
     public function listAction()
     {
+//        $posts = $this->getDoctrine()->getRepository('AppBundle\Entity\RedditPost')
+//            ->someQueryWeCareAbout(515);
 
+        $someConditional = true;
 
-        $posts = $this->getDoctrine()->getRepository('AppBundle\Entity\RedditPost')
-            ->someQueryWeCareAbout(515);
+        $query = $this->getDoctrine()->getRepository('AppBundle\Entity\RedditPost')
+            ->createQueryBuilder('p');
+
+        if ($someConditional) {
+            $query->where('p.id > :id')
+                ->setParameter('id', 50);
+        }
+
+        $posts = $query->getQuery()->getResult();
 
         dump($posts);
 
