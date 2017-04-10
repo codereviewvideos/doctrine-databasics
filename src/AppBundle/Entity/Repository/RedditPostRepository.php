@@ -18,9 +18,8 @@ class RedditPostRepository extends EntityRepository
             ORDER BY a.name DESC
             "
         )
-            ->setParameter('id', $id)
-            ->getResult()
-        ;
+                    ->setParameter('id', $id)
+                    ->getResult();
     }
 
 }

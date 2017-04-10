@@ -5,6 +5,7 @@ namespace AppBundle\Service;
 use AppBundle\Entity\RedditAuthor;
 use AppBundle\Entity\RedditPost;
 use Doctrine\ORM\EntityManagerInterface;
+use GuzzleHttp\Client;
 
 class RedditScraper
 {
@@ -20,15 +21,27 @@ class RedditScraper
 
     public function scrape()
     {
-        $client = new \GuzzleHttp\Client();
-        $after = null;
+        $client = new Client();
+        $after  = null;
 
-        for ($x=0; $x<5; $x++) {
-            $response = $client->request('GET', 'https://api.reddit.com/r/php.json?limit=25&after=' . $after);
+        for ($x = 0; $x < 5; $x++) {
+            $response = $client->request(
+                'GET',
+                'https://api.reddit.com/r/php.json?limit=25&after=' . $after,
+                [
+                    //429 Too Many Requests
+                    'headers' => [
+                        'User-Agent' => 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36'
+                    ]
+                ]
+            );
 
             $contents[$x] = json_decode($response->getBody()->getContents(), true);
 
             $after = $contents[$x]['data']['after'];
+
+            //429 Too Many Requests
+            sleep(1);
         }
 
         foreach ($contents as $content) {
@@ -39,9 +52,10 @@ class RedditScraper
 
                 $authorName = $child['data']['author'];
 
-                $redditAuthor = $this->em->getRepository('AppBundle:RedditAuthor')->findOneBy([
-                    'name' => $authorName
-                ]);
+                $redditAuthor = $this->em->getRepository('AppBundle:RedditAuthor')
+                                         ->findOneBy([
+                                                         'name' => $authorName
+                                                     ]);
 
                 if (!$redditAuthor) {
                     $redditAuthor = new RedditAuthor();
