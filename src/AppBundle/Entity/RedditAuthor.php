@@ -75,7 +75,7 @@ class RedditAuthor
 
     public function addPost(RedditPost $redditPost)
     {
-        if ( ! $this->posts->contains($redditPost)) {
+        if (!$this->posts->contains($redditPost)) {
             $redditPost->setAuthor($this);
             $this->posts->add($redditPost);
         }

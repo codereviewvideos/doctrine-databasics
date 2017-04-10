@@ -2,8 +2,9 @@
 
 namespace AppBundle\Controller;
 
-use Symfony\Component\Routing\Annotation\Route;
+use AppBundle\Service\RedditScraper;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Routing\Annotation\Route;
 
 class RedditController extends Controller
 {
@@ -18,11 +19,11 @@ class RedditController extends Controller
         $someConditional = true;
 
         $query = $this->getDoctrine()->getRepository('AppBundle\Entity\RedditPost')
-            ->createQueryBuilder('p');
+                      ->createQueryBuilder('p');
 
         if ($someConditional) {
             $query->where('p.id > :id')
-                ->setParameter('id', 50);
+                  ->setParameter('id', 50);
         }
 
         $posts = $query->getQuery()->getResult();
@@ -39,7 +40,9 @@ class RedditController extends Controller
      */
     public function scraperAction()
     {
-        $result = $this->get('reddit_scraper')->scrape();
+        /** @var RedditScraper $reddit */
+        $reddit = $this->get('reddit_scraper');
+        $result = $reddit->scrape();
 
         return $this->render(':reddit:index.html.twig', [
             'posts' => []
