@@ -38,10 +38,8 @@ class RedditController extends Controller
     /**
      * @Route("/scraper", name="scraper")
      */
-    public function scraperAction()
+    public function scraperAction(RedditScraper $reddit)
     {
-        /** @var RedditScraper $reddit */
-        $reddit = $this->get('reddit_scraper');
         $result = $reddit->scrape();
 
         return $this->render(':reddit:index.html.twig', [
