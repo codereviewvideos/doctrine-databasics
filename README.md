@@ -37,3 +37,13 @@ This beginner friendly short course is all about demystifying a bunch of these t
 Doctrine in Symfony 3.
 
 Find the full course at https://codereviewvideos.com/course/doctrine-databasics
+
+
+
+## Setup
+
+1. `make dev`
+2. `php bin/console doctrine:schema:update --force`
+3. `php bin/console server:start`
+4. Browse to e.g. `http://127.0.0.1:8000/scraper`
+5. After scrape completes, browse to e.g. `http://127.0.0.1:8000/`

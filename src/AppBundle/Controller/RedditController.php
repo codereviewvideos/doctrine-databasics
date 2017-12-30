@@ -16,7 +16,7 @@ class RedditController extends Controller
 //        $posts = $this->getDoctrine()->getRepository('AppBundle\Entity\RedditPost')
 //            ->someQueryWeCareAbout(515);
 
-        $someConditional = true;
+        $someConditional = false;
 
         $query = $this->getDoctrine()->getRepository('AppBundle\Entity\RedditPost')
                       ->createQueryBuilder('p');

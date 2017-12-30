@@ -46,3 +46,4 @@
 
 .idea/
 .vagrant/
+.web-server-pid
